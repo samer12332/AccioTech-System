@@ -54,7 +54,7 @@ From the repository root, run:
 npm install
 ```
 
-This creates the workspace lockfile. There are intentionally no application dependencies yet. Frontend and backend initialization happen in subsequent tasks.
+This installs all workspace dependencies and creates the single root workspace lockfile.
 
 ## Workspace conventions
 
@@ -75,7 +75,16 @@ Commit only environment templates such as `.env.example` and `.env.local.example
 3. Implement the scoped task and run the checks that exist for it.
 4. Review `git status` before committing.
 
-Root development, lint, type-check, test, and build commands will be added only after their corresponding applications and checks exist.
+Useful workspace commands:
+
+```bash
+npm run dev:web
+npm run build:web
+npm run dev:api
+npm run build:api
+npm run lint:api
+npm run typecheck:api
+```
 
 ## Daily Git commit policy
 
@@ -87,4 +96,4 @@ Make small, reviewable commits at the end of a completed, verified unit of work.
 | --- | --- |
 | Planned | Frontend, backend, database, domain modules, testing, Docker services, and CI/CD. |
 | In progress | Week 1 infrastructure and design foundation. |
-| Completed | Week 1, Day 1, Mini Task 1 workspace foundation. |
+| Completed | Week 1, Day 1, Mini Task 1 workspace foundation; Mini Task 2 Next.js frontend initialization; Mini Task 3 NestJS backend initialization. |
