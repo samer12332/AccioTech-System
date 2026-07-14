@@ -45,6 +45,7 @@ acciotech-system/
 - A current Node.js LTS release compatible with the applications when they are initialized.
 - npm, included with Node.js.
 - Git.
+- Docker Desktop with Docker Compose for local PostgreSQL development.
 
 ## Installation
 
@@ -67,6 +68,28 @@ This installs all workspace dependencies and creates the single root workspace l
 ## Environment files
 
 Commit only environment templates such as `.env.example` and `.env.local.example`. Create untracked local `.env` files from the appropriate example when configuration is introduced. Never commit secrets.
+
+The root `.env.example` configures local Docker/PostgreSQL infrastructure. `apps/api/.env.example` configures the backend, including its future `DATABASE_URL`. Copy either template to its corresponding untracked `.env` file only when local overrides are needed.
+
+## Local PostgreSQL
+
+This repository provides local PostgreSQL infrastructure only. Prisma, migrations, tables, and application database connectivity are not configured yet.
+
+PostgreSQL listens on port `5432` by default. Start and inspect it from the repository root:
+
+```powershell
+docker compose up -d
+docker compose ps
+docker compose logs postgres
+```
+
+Stop the service without deleting its persistent named volume:
+
+```powershell
+docker compose down
+```
+
+The equivalent npm wrappers are `npm run docker:up`, `npm run docker:logs`, and `npm run docker:down`.
 
 ## Development workflow
 
