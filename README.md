@@ -75,7 +75,22 @@ The root `.env.example` configures local Docker/PostgreSQL infrastructure. `apps
 
 This repository provides local PostgreSQL infrastructure only. Prisma, migrations, tables, and application database connectivity are not configured yet.
 
-PostgreSQL listens on port `5432` by default. Start and inspect it from the repository root:
+Two PostgreSQL instances can run simultaneously because they use different host ports:
+
+| Instance | Host | Port | User | Database |
+| --- | --- | --- | --- | --- |
+| Local PostgreSQL / pgAdmin | `localhost` | `5432` | `postgres` | Your local databases |
+| AccioTech Docker PostgreSQL | `localhost` | `5433` (mapped to container `5432`) | `postgres` | `acciotech` |
+
+AccioTech Docker PostgreSQL uses `postgres:17-alpine` with a persistent named volume. Its development connection string is:
+
+```text
+postgresql://postgres:acciotech_dev_password@localhost:5433/acciotech
+```
+
+Prisma will use this connection string when it is configured in Mini Task 5; Prisma is not configured yet.
+
+Start and inspect the Docker PostgreSQL service from the repository root:
 
 ```powershell
 docker compose up -d
