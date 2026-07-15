@@ -11,7 +11,7 @@ The project is a modular monolith in an npm-workspaces monorepo:
 - `apps/web` — planned Next.js, TypeScript, and App Router frontend.
 - `apps/api` — planned NestJS and TypeScript REST API.
 - `packages/shared` — future shared TypeScript contracts, added only when justified.
-- PostgreSQL and Prisma are planned for persistence in a later task.
+- PostgreSQL and Prisma provide the initial persistence foundation.
 
 ## Locked technology stack
 
@@ -69,11 +69,11 @@ This installs all workspace dependencies and creates the single root workspace l
 
 Commit only environment templates such as `.env.example` and `.env.local.example`. Create untracked local `.env` files from the appropriate example when configuration is introduced. Never commit secrets.
 
-The root `.env.example` configures local Docker/PostgreSQL infrastructure. `apps/api/.env.example` configures the backend, including its future `DATABASE_URL`. Copy either template to its corresponding untracked `.env` file only when local overrides are needed.
+The root `.env.example` configures local Docker/PostgreSQL infrastructure. `apps/api/.env.example` configures the backend `DATABASE_URL`. Copy each template to its corresponding untracked `.env` file for local development; never commit the real `.env` files.
 
 ## Local PostgreSQL
 
-This repository provides local PostgreSQL infrastructure only. Prisma, migrations, tables, and application database connectivity are not configured yet.
+This repository uses Docker PostgreSQL for application development. The Prisma datasource uses Docker on port `5433`, never the separate local PostgreSQL instance on port `5432`.
 
 Two PostgreSQL instances can run simultaneously because they use different host ports:
 
@@ -87,8 +87,6 @@ AccioTech Docker PostgreSQL uses `postgres:17-alpine` with a persistent named vo
 ```text
 postgresql://postgres:acciotech_dev_password@localhost:5433/acciotech
 ```
-
-Prisma will use this connection string when it is configured in Mini Task 5; Prisma is not configured yet.
 
 Start and inspect the Docker PostgreSQL service from the repository root:
 
@@ -105,6 +103,22 @@ docker compose down
 ```
 
 The equivalent npm wrappers are `npm run docker:up`, `npm run docker:logs`, and `npm run docker:down`.
+
+## Prisma
+
+Prisma is contained entirely in `apps/api`: the schema, migrations, and idempotent technical seed are in `apps/api/prisma/`, and the generated client is regenerated into an ignored API source directory. Docker PostgreSQL must be running on `localhost:5433` before using Prisma commands.
+
+Run Prisma commands from the repository root:
+
+```powershell
+npm run prisma:validate --workspace=api
+npm run prisma:generate --workspace=api
+npm run prisma:migrate:dev --workspace=api
+npm run prisma:migrate:status --workspace=api
+npm run prisma:seed --workspace=api
+```
+
+The initial `SystemMetadata` model is technical infrastructure only, used to prove the migration, generated client, and seed workflow. The AccioTech business ERD has intentionally not been implemented yet.
 
 ## Development workflow
 

@@ -1,0 +1,16 @@
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+/// Technical infrastructure metadata only; this is not the AccioTech business ERD.
+model SystemMetadata {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
