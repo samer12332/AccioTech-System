@@ -77,10 +77,10 @@ This repository uses Docker PostgreSQL for application development. The Prisma d
 
 Two PostgreSQL instances can run simultaneously because they use different host ports:
 
-| Instance | Host | Port | User | Database |
-| --- | --- | --- | --- | --- |
-| Local PostgreSQL / pgAdmin | `localhost` | `5432` | `postgres` | Your local databases |
-| AccioTech Docker PostgreSQL | `localhost` | `5433` (mapped to container `5432`) | `postgres` | `acciotech` |
+| Instance                    | Host        | Port                                | User       | Database             |
+| --------------------------- | ----------- | ----------------------------------- | ---------- | -------------------- |
+| Local PostgreSQL / pgAdmin  | `localhost` | `5432`                              | `postgres` | Your local databases |
+| AccioTech Docker PostgreSQL | `localhost` | `5433` (mapped to container `5432`) | `postgres` | `acciotech`          |
 
 AccioTech Docker PostgreSQL uses `postgres:17-alpine` with a persistent named volume. Its development connection string is:
 
@@ -138,14 +138,38 @@ npm run lint:api
 npm run typecheck:api
 ```
 
+## API testing
+
+The API uses Vitest (with the V8 coverage provider), NestJS TestingModule, and
+Supertest. Unit tests live beside their source files as `*.spec.ts`; HTTP
+integration tests live in `apps/api/test` as `*.e2e-spec.ts`.
+
+Run backend testing commands from the repository root:
+
+```powershell
+npm run test --workspace=api
+npm run test:watch --workspace=api
+npm run test:coverage --workspace=api
+npm run test:e2e --workspace=api
+npm run typecheck:test --workspace=api
+```
+
+The unit and HTTP integration suites generate the ignored Prisma Client when
+needed, then run with a syntactically valid fake database URL and a mocked
+`PrismaService`; they do not require a live PostgreSQL instance, migrations, or
+seed data. Coverage reports are written to `apps/api/coverage/` and are ignored.
+Coverage thresholds are intentionally deferred until business modules exist.
+
+Browser E2E testing is not part of this testing foundation.
+
 ## Daily Git commit policy
 
 Make small, reviewable commits at the end of a completed, verified unit of work. Do not commit partial or unreviewed changes; one Day 1 commit will follow the completion and review of all three Day 1 mini tasks.
 
 ## Current project status
 
-| Status | Scope |
-| --- | --- |
-| Planned | Frontend, backend, database, domain modules, testing, Docker services, and CI/CD. |
-| In progress | Week 1 infrastructure and design foundation. |
-| Completed | Week 1, Day 1, Mini Task 1 workspace foundation; Mini Task 2 Next.js frontend initialization; Mini Task 3 NestJS backend initialization. |
+| Status      | Scope                                                                                                                                    |
+| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Planned     | Frontend, backend, database, domain modules, testing, Docker services, and CI/CD.                                                        |
+| In progress | Week 1 infrastructure and design foundation.                                                                                             |
+| Completed   | Week 1, Day 1, Mini Task 1 workspace foundation; Mini Task 2 Next.js frontend initialization; Mini Task 3 NestJS backend initialization. |

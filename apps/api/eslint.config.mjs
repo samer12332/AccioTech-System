@@ -3,14 +3,14 @@ import prettierRecommended from 'eslint-plugin-prettier/recommended';
 import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
-  { ignores: ['dist/**', 'src/generated/**'] },
+  { ignores: ['dist/**', 'src/generated/**', 'coverage/**'] },
   eslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
   prettierRecommended,
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        project: './tsconfig.spec.json',
         tsconfigRootDir: import.meta.dirname,
       },
     },
