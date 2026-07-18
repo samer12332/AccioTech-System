@@ -11,6 +11,7 @@
     "build:web": "npm run build --workspace=web",
     "lint:web": "npm run lint --workspace=web",
     "typecheck:web": "npm run typecheck --workspace=web",
+    "test:web": "npm run test --workspace=web",
     "dev:api": "npm run start:dev --workspace=api",
     "build:api": "npm run build --workspace=api",
     "lint:api": "npm run lint --workspace=api",

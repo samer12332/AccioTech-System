@@ -162,6 +162,26 @@ Coverage thresholds are intentionally deferred until business modules exist.
 
 Browser E2E testing is not part of this testing foundation.
 
+## Frontend testing
+
+The frontend uses Vitest, React Testing Library, jest-dom, user-event, and
+jsdom. Component tests live beside source files as `*.test.tsx` or `*.test.ts`.
+
+Run frontend testing commands from the repository root:
+
+```powershell
+npm run test --workspace=web
+npm run test:watch --workspace=web
+npm run test:coverage --workspace=web
+npm run typecheck:test --workspace=web
+```
+
+These tests run in jsdom and do not require the API, Docker, or PostgreSQL.
+Coverage reports are written to `apps/web/coverage/` and are ignored. Coverage
+thresholds are intentionally deferred until real frontend modules exist.
+Browser E2E and Playwright belong to Mini Task 9 and are not implemented yet.
+Future async Server Components should be tested through browser E2E.
+
 ## Daily Git commit policy
 
 Make small, reviewable commits at the end of a completed, verified unit of work. Do not commit partial or unreviewed changes; one Day 1 commit will follow the completion and review of all three Day 1 mini tasks.
