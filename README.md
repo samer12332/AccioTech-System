@@ -182,6 +182,25 @@ thresholds are intentionally deferred until real frontend modules exist.
 Browser E2E and Playwright belong to Mini Task 9 and are not implemented yet.
 Future async Server Components should be tested through browser E2E.
 
+## Browser E2E testing
+
+Browser E2E uses Playwright with its bundled Chromium only for the Week 1
+foundation. Install Chromium, run headless E2E, or run a headed manual check:
+
+```powershell
+npm run playwright:install --workspace=web
+npm run test:e2e --workspace=web
+npm run test:e2e:headed --workspace=web
+npm run typecheck:e2e --workspace=web
+```
+
+Playwright builds the frontend and manages a production Next.js server on
+`127.0.0.1:3100`; no NestJS API, Docker, or PostgreSQL instance is required.
+HTML reports are written to `apps/web/playwright-report/` and failure artifacts
+to `apps/web/test-results/`; both are ignored. Firefox, WebKit, CI workflow
+automation, and real authentication or business flows are intentionally
+deferred.
+
 ## Daily Git commit policy
 
 Make small, reviewable commits at the end of a completed, verified unit of work. Do not commit partial or unreviewed changes; one Day 1 commit will follow the completion and review of all three Day 1 mini tasks.
