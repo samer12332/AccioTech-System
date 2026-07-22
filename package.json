@@ -21,6 +21,15 @@
     "test:e2e:api": "npm run test:e2e --workspace=api",
     "docker:up": "docker compose up -d",
     "docker:down": "docker compose down",
-    "docker:logs": "docker compose logs -f postgres"
+    "docker:logs": "docker compose logs -f postgres",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
+    "lint": "npm run lint:api && npm run lint:web",
+    "typecheck": "npm run typecheck:api && npm run typecheck:web",
+    "quality": "npm run format:check && npm run lint && npm run typecheck"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "10.1.8",
+    "prettier": "3.6.2"
   }
 }

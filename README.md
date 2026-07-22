@@ -138,6 +138,20 @@ npm run lint:api
 npm run typecheck:api
 ```
 
+## Code quality
+
+Prettier handles formatting, while ESLint handles code-quality rules.
+EditorConfig and Git attributes enforce shared whitespace and line-ending
+conventions. Git hooks and CI enforcement are not part of Mini Task 10.
+
+```powershell
+npm run format
+npm run format:check
+npm run lint
+npm run typecheck
+npm run quality
+```
+
 ## API testing
 
 The API uses Vitest (with the V8 coverage provider), NestJS TestingModule, and
