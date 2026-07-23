@@ -1,228 +1,86 @@
 # AccioTech Operating System
 
-> From Imagination to Innovation
+Internal operating-system foundations for AccioTech. Week 1 establishes the shared workspace, application runtime, database tooling, quality checks, and internal UI references used by future feature work.
 
-AccioTech Operating System is the future operational platform for AccioTech, an educational technology organization. It will bring core organizational workflows into one production-oriented web system.
+## Technology stack
 
-## Architecture direction
-
-The project is a modular monolith in an npm-workspaces monorepo:
-
-- `apps/web` — planned Next.js, TypeScript, and App Router frontend.
-- `apps/api` — planned NestJS and TypeScript REST API.
-- `packages/shared` — future shared TypeScript contracts, added only when justified.
-- PostgreSQL and Prisma provide the initial persistence foundation.
-
-## Locked technology stack
-
-- Package manager: npm
-- Frontend: Next.js + TypeScript + App Router (planned)
-- Backend: NestJS + TypeScript + REST API (planned)
-- Database: PostgreSQL + Prisma ORM (planned)
-- Architecture: modular monolith + monorepo
+- Node.js 22 and npm workspaces
+- Next.js, TypeScript, App Router, Vitest, React Testing Library, and Playwright
+- NestJS, TypeScript, Vitest, and Supertest
+- PostgreSQL 17 in Docker and Prisma
 
 ## Repository structure
 
 ```text
-acciotech-system/
-├── apps/
-│   ├── web/
-│   └── api/
-├── packages/
-│   └── shared/
-├── docs/
-├── docker/
-├── .github/
-├── .editorconfig
-├── .gitignore
-├── package.json
-├── README.md
-└── LICENSE
+apps/web              Next.js frontend and internal UI references
+apps/api              NestJS API, Prisma schema, migrations, and seed
+docs                  Project conventions and foundation reports
+docker-compose.yml    Local PostgreSQL service
+packages/shared       Reserved for justified shared contracts
 ```
 
 ## Prerequisites
 
-- A current Node.js LTS release compatible with the applications when they are initialized.
-- npm, included with Node.js.
-- Git.
-- Docker Desktop with Docker Compose for local PostgreSQL development.
+- Node.js 22
+- npm
+- Docker Desktop
+- Git
+
+## Environment setup
+
+Copy the tracked templates before starting local services. Never commit real `.env` files.
+
+```powershell
+Copy-Item .env.example .env
+Copy-Item apps/api/.env.example apps/api/.env
+```
+
+The development PostgreSQL service uses host port `5434`, database `acciotech`, user `postgres`, and the development-only example password `acciotech_dev_password`. Fresh local environments should keep the root and API `DATABASE_URL` values aligned. Existing Docker volumes retain the credentials with which they were first created.
 
 ## Installation
 
-From the repository root, run:
-
-```bash
+```powershell
 npm install
 ```
 
-This installs all workspace dependencies and creates the single root workspace lockfile.
-
-## Workspace conventions
-
-- Keep runnable applications in `apps/` and reusable, justified code in `packages/`.
-- Keep technical documentation in `docs/`.
-- Keep future Docker support files in `docker/`.
-- Do not introduce shared code or tooling until a real use case exists.
-- Follow the concise naming guidance in [docs/conventions.md](docs/conventions.md).
-
-## Environment files
-
-Commit only environment templates such as `.env.example` and `.env.local.example`. Create untracked local `.env` files from the appropriate example when configuration is introduced. Never commit secrets.
-
-The root `.env.example` configures local Docker/PostgreSQL infrastructure. `apps/api/.env.example` configures the backend `DATABASE_URL`. Copy each template to its corresponding untracked `.env` file for local development; never commit the real `.env` files.
-
-## Local PostgreSQL
-
-This repository uses Docker PostgreSQL for application development. The Prisma datasource uses Docker on port `5433`, never the separate local PostgreSQL instance on port `5432`.
-
-Two PostgreSQL instances can run simultaneously because they use different host ports:
-
-| Instance                    | Host        | Port                                | User       | Database             |
-| --------------------------- | ----------- | ----------------------------------- | ---------- | -------------------- |
-| Local PostgreSQL / pgAdmin  | `localhost` | `5432`                              | `postgres` | Your local databases |
-| AccioTech Docker PostgreSQL | `localhost` | `5433` (mapped to container `5432`) | `postgres` | `acciotech`          |
-
-AccioTech Docker PostgreSQL uses `postgres:17-alpine` with a persistent named volume. Its development connection string is:
-
-```text
-postgresql://postgres:acciotech_dev_password@localhost:5433/acciotech
-```
-
-Start and inspect the Docker PostgreSQL service from the repository root:
+## Development startup
 
 ```powershell
-docker compose up -d
-docker compose ps
-docker compose logs postgres
+npm run docker:up
+npm run dev:api
+npm run dev:web
 ```
 
-Stop the service without deleting its persistent named volume:
+- Frontend: http://localhost:3000
+- API health: http://localhost:3001/api/health
+- Swagger: http://localhost:3001/api/docs
+- UI reference: http://localhost:3000/dev/ui
+- Shell reference: http://localhost:3000/dev/shell
+- Dashboard reference: http://localhost:3000/dev/dashboard
+
+## Database commands
+
+Run these existing API workspace commands from the repository root while PostgreSQL is running:
 
 ```powershell
-docker compose down
-```
-
-The equivalent npm wrappers are `npm run docker:up`, `npm run docker:logs`, and `npm run docker:down`.
-
-## Prisma
-
-Prisma is contained entirely in `apps/api`: the schema, migrations, and idempotent technical seed are in `apps/api/prisma/`, and the generated client is regenerated into an ignored API source directory. Docker PostgreSQL must be running on `localhost:5433` before using Prisma commands.
-
-Run Prisma commands from the repository root:
-
-```powershell
-npm run prisma:validate --workspace=api
 npm run prisma:generate --workspace=api
 npm run prisma:migrate:dev --workspace=api
 npm run prisma:migrate:status --workspace=api
 npm run prisma:seed --workspace=api
 ```
 
-The initial `SystemMetadata` model is technical infrastructure only, used to prove the migration, generated client, and seed workflow. The AccioTech business ERD has intentionally not been implemented yet.
-
-## Development workflow
-
-1. Create or switch to a focused branch.
-2. Install dependencies from the repository root when package manifests change.
-3. Implement the scoped task and run the checks that exist for it.
-4. Review `git status` before committing.
-
-Useful workspace commands:
-
-```bash
-npm run dev:web
-npm run build:web
-npm run dev:api
-npm run build:api
-npm run lint:api
-npm run typecheck:api
-```
-
-## Code quality
-
-Prettier handles formatting, while ESLint handles code-quality rules.
-EditorConfig and Git attributes enforce shared whitespace and line-ending
-conventions. Git hooks and CI enforcement are not part of Mini Task 10.
+## Quality and testing
 
 ```powershell
-npm run format
-npm run format:check
-npm run lint
-npm run typecheck
 npm run quality
+npm run test:api
+npm run test:e2e:api
+npm run test:web
+npm run test:e2e:web
+npm run build:api
+npm run build:web
 ```
 
-## API testing
+## Git workflow
 
-The API uses Vitest (with the V8 coverage provider), NestJS TestingModule, and
-Supertest. Unit tests live beside their source files as `*.spec.ts`; HTTP
-integration tests live in `apps/api/test` as `*.e2e-spec.ts`.
-
-Run backend testing commands from the repository root:
-
-```powershell
-npm run test --workspace=api
-npm run test:watch --workspace=api
-npm run test:coverage --workspace=api
-npm run test:e2e --workspace=api
-npm run typecheck:test --workspace=api
-```
-
-The unit and HTTP integration suites generate the ignored Prisma Client when
-needed, then run with a syntactically valid fake database URL and a mocked
-`PrismaService`; they do not require a live PostgreSQL instance, migrations, or
-seed data. Coverage reports are written to `apps/api/coverage/` and are ignored.
-Coverage thresholds are intentionally deferred until business modules exist.
-
-Browser E2E testing is not part of this testing foundation.
-
-## Frontend testing
-
-The frontend uses Vitest, React Testing Library, jest-dom, user-event, and
-jsdom. Component tests live beside source files as `*.test.tsx` or `*.test.ts`.
-
-Run frontend testing commands from the repository root:
-
-```powershell
-npm run test --workspace=web
-npm run test:watch --workspace=web
-npm run test:coverage --workspace=web
-npm run typecheck:test --workspace=web
-```
-
-These tests run in jsdom and do not require the API, Docker, or PostgreSQL.
-Coverage reports are written to `apps/web/coverage/` and are ignored. Coverage
-thresholds are intentionally deferred until real frontend modules exist.
-Browser E2E and Playwright belong to Mini Task 9 and are not implemented yet.
-Future async Server Components should be tested through browser E2E.
-
-## Browser E2E testing
-
-Browser E2E uses Playwright with its bundled Chromium only for the Week 1
-foundation. Install Chromium, run headless E2E, or run a headed manual check:
-
-```powershell
-npm run playwright:install --workspace=web
-npm run test:e2e --workspace=web
-npm run test:e2e:headed --workspace=web
-npm run typecheck:e2e --workspace=web
-```
-
-Playwright builds the frontend and manages a production Next.js server on
-`127.0.0.1:3100`; no NestJS API, Docker, or PostgreSQL instance is required.
-HTML reports are written to `apps/web/playwright-report/` and failure artifacts
-to `apps/web/test-results/`; both are ignored. Firefox, WebKit, CI workflow
-automation, and real authentication or business flows are intentionally
-deferred.
-
-## Daily Git commit policy
-
-Make small, reviewable commits at the end of a completed, verified unit of work. Do not commit partial or unreviewed changes; one Day 1 commit will follow the completion and review of all three Day 1 mini tasks.
-
-## Current project status
-
-| Status      | Scope                                                                                                                                    |
-| ----------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Planned     | Frontend, backend, database, domain modules, testing, Docker services, and CI/CD.                                                        |
-| In progress | Week 1 infrastructure and design foundation.                                                                                             |
-| Completed   | Week 1, Day 1, Mini Task 1 workspace foundation; Mini Task 2 Next.js frontend initialization; Mini Task 3 NestJS backend initialization. |
+Development work currently targets `dev`. Keep one focused commit per mini task, commit only after review and manual verification, and never commit secrets or generated artifacts.

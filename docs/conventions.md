@@ -14,3 +14,26 @@ Keep names clear and unsurprising. Prefer the conventions below unless a framewo
 | Commit messages                | imperative Conventional Commit style                                            | `feat: add attendance endpoint`      |
 
 Use branch prefixes such as `feat/`, `fix/`, `docs/`, `chore/`, and `refactor/`. Keep commit subjects concise and scoped to one logical change.
+
+## UI conventions
+
+Use semantic design tokens and shared UI primitives before adding page-specific
+components. Keep the light AccioTech interface professional and accessible:
+navy provides the primary foundation, cyan is the technology accent, and gold
+is used sparingly for AccioTech emphasis. Provide visible keyboard focus,
+semantic controls, and accessible status or alert messaging.
+
+Avoid random gradients and generic AI-dashboard styling. Do not introduce a UI
+library without an explicit architectural decision.
+
+`/dev/ui` is the canonical visual reference for shared tokens and primitives. Keep examples neutral and free of business data, and represent all new primitives or variants there. Review it at desktop and mobile widths; it uses `AppShell` but contains no authorization or business logic.
+
+## Application shell
+
+System pages should use `AppShell` so navigation, landmarks, and responsive behavior remain consistent. Supply navigation items as configuration rather than embedding page-specific navigation in the shell; desktop and mobile layouts share that source. Keep the mobile menu as the only Client Component boundary; the shell and page content should remain server components where possible.
+
+`/dev/shell` is the internal preview for this foundation. Navigation visibility is not authorization: business authorization must be enforced by the relevant application logic, not through hidden navigation alone. Review visual shell changes at both desktop and mobile widths.
+
+## Dashboard foundation
+
+`/dev/dashboard` is the internal dashboard layout reference. All displayed values are static preview data; operational pages should use `AppShell` and shared primitives, while real data integration belongs to later feature tasks. Dashboard cards must not become authorization boundaries, and changes should be reviewed at desktop and mobile widths.

@@ -1,0 +1,248 @@
+.introduction {
+  display: grid;
+  gap: var(--space-4);
+  margin-bottom: var(--space-8);
+  padding: var(--space-6) 0;
+  border-top: 3px solid var(--color-gold-500);
+  border-bottom: 1px solid var(--color-border);
+}
+.actions,
+.contextStrip,
+.sessionBadges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+.contextStrip {
+  align-items: center;
+  padding: var(--space-3);
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+.contextStrip > span {
+  margin-right: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+}
+.section + .section {
+  margin-top: var(--space-8);
+}
+.metricGrid,
+.operationalGrid {
+  display: grid;
+  gap: var(--space-5);
+  margin-top: var(--space-5);
+}
+.metricCard {
+  border-top: 3px solid var(--color-cyan-600);
+}
+.metricHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+.metricLabel,
+.metricNote {
+  margin-bottom: var(--space-2);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+.metricMonogram {
+  display: grid;
+  width: 2rem;
+  height: 2rem;
+  place-items: center;
+  color: var(--color-cyan-600);
+  background: var(--color-surface-subtle);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+.metricValue {
+  margin-bottom: var(--space-2);
+  color: var(--color-navy-950);
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+}
+.sessionsCard {
+  border-top: 3px solid var(--color-navy-800);
+}
+.sessionList,
+.attentionList,
+.activityList {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.sessionList {
+  display: grid;
+}
+.sessionList li {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+.sessionList li:last-child {
+  padding-bottom: 0;
+  border: 0;
+}
+.sessionList time {
+  color: var(--color-navy-800);
+  font-weight: var(--font-weight-bold);
+}
+.sessionList strong,
+.activityList strong,
+.attentionList strong,
+.nextActions strong {
+  display: block;
+  color: var(--color-navy-950);
+}
+.sessionList span,
+.activityList p,
+.activityList small,
+.attentionList p,
+.nextActions span {
+  display: block;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+.activityList {
+  display: grid;
+  gap: var(--space-4);
+}
+.activityList li {
+  display: grid;
+  grid-template-columns: 0.5rem minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: start;
+}
+.activityMarker {
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-top: 0.45rem;
+  background: var(--color-cyan-600);
+  border-radius: 50%;
+}
+.activityList p {
+  margin: var(--space-1) 0;
+}
+.secondaryColumn {
+  display: grid;
+  align-content: start;
+  gap: var(--space-8);
+}
+.secondaryColumn .section {
+  margin: 0;
+}
+.attentionList {
+  display: grid;
+  gap: var(--space-4);
+}
+.attentionList li {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.attentionList li:last-child {
+  padding-bottom: 0;
+  border: 0;
+}
+.attentionList p {
+  margin: var(--space-1) 0 var(--space-2);
+}
+.previewNote {
+  margin-bottom: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+.pipeline {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+}
+.pipeline div {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+.pipeline div:last-child {
+  padding: 0;
+  border: 0;
+}
+.pipeline dt {
+  font-weight: var(--font-weight-semibold);
+}
+.pipeline dd {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+.nextActions {
+  display: grid;
+  gap: var(--space-3);
+}
+.nextActions > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding-bottom: var(--space-3);
+  border-bottom: 1px solid var(--color-border);
+}
+.nextActions > div:last-child {
+  padding: 0;
+  border: 0;
+}
+.nextActions span {
+  margin-top: var(--space-1);
+}
+@media (min-width: 40rem) {
+  .metricGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 64rem) {
+  .metricGrid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+  .operationalGrid {
+    grid-template-columns: minmax(0, 1.65fr) minmax(17rem, 0.85fr);
+  }
+}
+@media (max-width: 39.99rem) {
+  .actions button {
+    flex: 1 1 10rem;
+  }
+  .contextStrip > span {
+    width: 100%;
+  }
+  .sessionList li {
+    grid-template-columns: 3.5rem minmax(0, 1fr);
+  }
+  .sessionBadges {
+    grid-column: 2;
+  }
+  .activityList li {
+    grid-template-columns: 0.5rem minmax(0, 1fr);
+  }
+  .activityList li > span:last-child {
+    grid-column: 2;
+  }
+  .attentionList li,
+  .nextActions > div {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
