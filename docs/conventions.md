@@ -33,3 +33,7 @@ library without an explicit architectural decision.
 System pages should use `AppShell` so navigation, landmarks, and responsive behavior remain consistent. Supply navigation items as configuration rather than embedding page-specific navigation in the shell; desktop and mobile layouts share that source. Keep the mobile menu as the only Client Component boundary; the shell and page content should remain server components where possible.
 
 `/dev/shell` is the internal preview for this foundation. Navigation visibility is not authorization: business authorization must be enforced by the relevant application logic, not through hidden navigation alone. Review visual shell changes at both desktop and mobile widths.
+
+## Dashboard foundation
+
+`/dev/dashboard` is the internal dashboard layout reference. All displayed values are static preview data; operational pages should use `AppShell` and shared primitives, while real data integration belongs to later feature tasks. Dashboard cards must not become authorization boundaries, and changes should be reviewed at desktop and mobile widths.
