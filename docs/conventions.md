@@ -25,3 +25,6 @@ semantic controls, and accessible status or alert messaging.
 
 Avoid random gradients and generic AI-dashboard styling. Do not introduce a UI
 library without an explicit architectural decision.
+
+`/dev/ui` is the internal visual reference for shared tokens and primitives.
+Add new primitives there when introduced; it must not contain business logic or API calls.
