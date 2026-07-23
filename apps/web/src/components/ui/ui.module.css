@@ -1,0 +1,293 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.button:disabled {
+  opacity: 0.55;
+}
+.buttonSm {
+  min-height: var(--control-height-sm);
+  padding: 0 var(--space-3);
+  font-size: var(--font-size-sm);
+}
+.buttonMd {
+  min-height: var(--control-height-md);
+  padding: 0 var(--space-4);
+}
+.buttonLg {
+  min-height: var(--control-height-lg);
+  padding: 0 var(--space-5);
+  font-size: var(--font-size-lg);
+}
+.buttonPrimary {
+  color: var(--color-surface);
+  background: var(--color-primary);
+}
+.buttonPrimary:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+.buttonSecondary {
+  color: var(--color-navy-950);
+  background: var(--color-surface-subtle);
+}
+.buttonSecondary:hover:not(:disabled) {
+  background: #e2eaf3;
+}
+.buttonOutline {
+  color: var(--color-primary);
+  background: var(--color-surface);
+  border-color: var(--color-primary);
+}
+.buttonOutline:hover:not(:disabled) {
+  background: #edf4fb;
+}
+.buttonGhost {
+  color: var(--color-primary);
+  background: transparent;
+}
+.buttonGhost:hover:not(:disabled) {
+  background: var(--color-surface-subtle);
+}
+.buttonDanger {
+  color: var(--color-surface);
+  background: var(--color-danger);
+}
+.buttonDanger:hover:not(:disabled) {
+  background: #93252c;
+}
+.field {
+  width: 100%;
+  min-height: var(--control-height-md);
+  padding: var(--space-2) var(--space-3);
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
+.textarea {
+  min-height: 7rem;
+  resize: vertical;
+}
+.field:focus {
+  border-color: var(--color-focus-ring);
+  outline: none;
+  box-shadow: 0 0 0 3px rgb(27 156 204 / 0.2);
+}
+.field[aria-invalid="true"] {
+  border-color: var(--color-danger);
+}
+.field:disabled {
+  color: var(--color-text-muted);
+  background: var(--color-surface-subtle);
+}
+.card {
+  overflow: hidden;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.cardHeader,
+.cardContent,
+.cardFooter {
+  padding: var(--space-5);
+}
+.cardHeader {
+  padding-bottom: var(--space-3);
+}
+.cardContent {
+  padding-top: var(--space-3);
+}
+.cardFooter {
+  display: flex;
+  gap: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--color-border);
+}
+.cardTitle {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+.cardDescription {
+  margin: var(--space-1) 0 0;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 1.5rem;
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+}
+.badgeNeutral {
+  color: #42516a;
+  background: #e9eef5;
+}
+.badgeBrand {
+  color: var(--color-surface);
+  background: var(--color-primary);
+}
+.badgeInfo {
+  color: #0b548e;
+  background: #dceefe;
+}
+.badgeSuccess {
+  color: #10653f;
+  background: #dff5e8;
+}
+.badgeWarning {
+  color: #824905;
+  background: #fff0d9;
+}
+.badgeDanger {
+  color: #9b252c;
+  background: #fde5e6;
+}
+.alert {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid;
+  border-radius: var(--radius-md);
+}
+.alertInfo {
+  color: #0b548e;
+  background: #eef7ff;
+  border-color: #b8dcfa;
+}
+.alertSuccess {
+  color: #10653f;
+  background: #edfaf2;
+  border-color: #bce9cf;
+}
+.alertWarning {
+  color: #824905;
+  background: #fff8e9;
+  border-color: #f4d49d;
+}
+.alertDanger {
+  color: #9b252c;
+  background: #fff1f1;
+  border-color: #f1c3c6;
+}
+.alertIcon {
+  font-weight: var(--font-weight-bold);
+}
+.alertTitle {
+  margin: 0 0 var(--space-1);
+  font-weight: var(--font-weight-bold);
+}
+.alertContent > :last-child {
+  margin-bottom: 0;
+}
+.emptyState {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-10) var(--space-5);
+  text-align: center;
+  border: 1px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.emptyVisual {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--color-accent);
+  background: #e5f5fb;
+  border-radius: var(--radius-full);
+}
+.emptyTitle {
+  margin: 0;
+  font-size: var(--font-size-lg);
+}
+.emptyDescription {
+  max-width: 34rem;
+  margin: 0;
+  color: var(--color-text-muted);
+}
+.loading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+}
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: var(--radius-full);
+  animation: spin 750ms linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.container {
+  width: min(100% - 2rem, var(--content-width));
+  margin: 0 auto;
+}
+.sectionHeader {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+.sectionHeaderCopy {
+  max-width: var(--content-width-narrow);
+}
+.eyebrow {
+  margin: 0 0 var(--space-2);
+  color: var(--color-accent);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.sectionTitle {
+  margin: 0;
+  font-size: var(--font-size-3xl);
+}
+.sectionDescription {
+  margin: var(--space-3) 0 0;
+  color: var(--color-text-muted);
+  line-height: var(--line-height-relaxed);
+}
+.sectionActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+@media (min-width: 48rem) {
+  .container {
+    width: min(100% - 4rem, var(--content-width));
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+  .spinner {
+    animation: none;
+  }
+}

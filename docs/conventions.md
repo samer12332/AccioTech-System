@@ -14,3 +14,14 @@ Keep names clear and unsurprising. Prefer the conventions below unless a framewo
 | Commit messages                | imperative Conventional Commit style                                            | `feat: add attendance endpoint`      |
 
 Use branch prefixes such as `feat/`, `fix/`, `docs/`, `chore/`, and `refactor/`. Keep commit subjects concise and scoped to one logical change.
+
+## UI conventions
+
+Use semantic design tokens and shared UI primitives before adding page-specific
+components. Keep the light AccioTech interface professional and accessible:
+navy provides the primary foundation, cyan is the technology accent, and gold
+is used sparingly for AccioTech emphasis. Provide visible keyboard focus,
+semantic controls, and accessible status or alert messaging.
+
+Avoid random gradients and generic AI-dashboard styling. Do not introduce a UI
+library without an explicit architectural decision.
